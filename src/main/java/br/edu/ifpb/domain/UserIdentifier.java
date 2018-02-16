@@ -1,8 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package br.edu.ifpb.domain;
 
 import br.edu.ifpb.security.CredentialManager;
@@ -16,15 +12,11 @@ import javax.persistence.Id;
 import javax.persistence.OneToOne;
 import javax.persistence.Transient;
 
-/**
- *
- * @author miolivc
- */
 @Entity
 public class UserIdentifier implements Serializable {
     
     @Column(unique = true)
-    @OneToOne(cascade = CascadeType.PERSIST)
+    @OneToOne(cascade = CascadeType.MERGE)
     private User user;
     
     @Id
@@ -33,13 +25,12 @@ public class UserIdentifier implements Serializable {
     @Transient
     private PrivateKey secretKey;
 
-    public UserIdentifier(User user) {
+    public UserIdentifier(User user, PublicKey key, PrivateKey secretKey) {
         this.user = user;
-        CredentialManager manager = new CredentialManager();
-        this.key = manager.getPublicKey();
-        this.secretKey = manager.getPrivateKey();
+        this.key = key;
+        this.secretKey = secretKey;
     }
-
+    
     public UserIdentifier() {
     }
 
