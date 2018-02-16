@@ -5,13 +5,12 @@ import java.security.KeyPair;
 import java.security.KeyPairGenerator;
 import java.security.NoSuchAlgorithmException;
 import java.security.PrivateKey;
-import java.security.PublicKey;
-import javax.ejb.Stateless;
+import java.security.PublicKey;;
 
 public class CredentialManager {
     
     private final int LENGHT_KEY = 2048;
-    private KeyPair keyPair;
+    private final KeyPair keyPair;
     private KeyPairGenerator generator;
     
     public CredentialManager() {
