@@ -18,7 +18,7 @@ public class UserDao {
     }
     
     public List<User> getAll() {
-        return manager.createQuery("FROM User user", User.class)
+        return manager.createQuery("FROM Account user", User.class)
                       .getResultList();
     }
     

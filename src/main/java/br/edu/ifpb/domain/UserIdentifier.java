@@ -1,12 +1,10 @@
 
 package br.edu.ifpb.domain;
 
-import br.edu.ifpb.security.CredentialManager;
 import java.io.Serializable;
 import java.security.PrivateKey;
 import java.security.PublicKey;
 import javax.persistence.CascadeType;
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
@@ -15,7 +13,6 @@ import javax.persistence.Transient;
 @Entity
 public class UserIdentifier implements Serializable {
     
-    @Column(unique = true)
     @OneToOne(cascade = CascadeType.MERGE)
     private User user;
     

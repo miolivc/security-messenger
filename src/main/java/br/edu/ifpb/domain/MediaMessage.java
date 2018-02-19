@@ -10,7 +10,7 @@ public class MediaMessage extends Message {
  
     private byte[] content;
     
-    @Column(length = 10)
+//    @Column(length = 10)
     private String extension;
     
     public MediaMessage(File file) {

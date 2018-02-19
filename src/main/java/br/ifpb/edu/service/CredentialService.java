@@ -14,15 +14,15 @@ public class CredentialService {
 
     @Inject
     private UserIdentifierDao idents;
-    @Inject
-    private UserIdentifierCrypt cryptIdents;
+//    @Inject
+//    private UserIdentifierCrypt cryptIdents;
     private final CredentialManager cm = new CredentialManager();
 
     public void createCredential(User user) {
         UserIdentifier ident = new UserIdentifier(user, cm.getPublicKey(),
                 cm.getPrivateKey());
         idents.save(ident);
-        cryptIdents.saveIdent(ident);
+//        cryptIdents.saveIdent(ident);
     }
 
     public UserIdentifier getPublicCredential(String username) {
@@ -33,7 +33,7 @@ public class CredentialService {
             throws NotIdentifiedException {
         UserIdentifier identifier = idents.getOne(user);
         if (user.equals(identifier.getUser())) {
-            return cryptIdents.getCredential(user);
+//            return cryptIdents.getCredential(user);
         }
         throw new NotIdentifiedException("Unauthorized: Wrong parameter for user");
     }
