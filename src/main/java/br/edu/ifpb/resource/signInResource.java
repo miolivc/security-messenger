@@ -13,25 +13,25 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 
-@Path("login")
-public class LoginResource {
+@Path("signin")
+public class signInResource {
 
     @EJB
     private LoginService service;
 
     @POST
-    @Path("signin")
     @Consumes(MediaType.APPLICATION_JSON)
     public Response create(@Context UriInfo info, User user) {
         try {
-            service.sigin(user.getUsername(), user.getPassword(), user.getName());
+            service.signIn(user.getUsername(), user.getPassword(), user.getName());
         } catch(UserException ex) {
             return Response.status(401).entity(ex).build();
         }
-        
+
         URI location = info.getAbsolutePathBuilder()
                            .path(user.getUsername())
                            .build();
+
         return Response.created(location).build();
     }
     
