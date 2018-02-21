@@ -16,7 +16,11 @@ public class CredentialService {
     private UserIdentifierDao idents;
     @Inject
     private UserIdentifierCrypt cryptIdents;
-    private final CredentialManager cm = new CredentialManager();
+    @Inject
+    private CredentialManager cm;
+
+    public CredentialService() {
+    }
 
     public void createCredential(User user) {
         UserIdentifier ident = new UserIdentifier(user, cm.getPublicKey(),

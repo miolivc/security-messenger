@@ -2,34 +2,34 @@ package br.edu.ifpb.infra.dao;
 
 import br.edu.ifpb.domain.User;
 import br.edu.ifpb.domain.UserIdentifier;
+import br.edu.ifpb.infra.MongoConnection;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoCursor;
 import com.mongodb.client.MongoDatabase;
 import java.security.PrivateKey;
 import java.security.PublicKey;
 import javax.ejb.Stateless;
-import javax.inject.Inject;
 import org.bson.Document;
 
 @Stateless
 public class UserIdentifierCrypt {
 
-    @Inject
-    private MongoDatabase database;
+    private final MongoDatabase database;
     private final MongoCollection<Document> collection;
 
-    {
+    public UserIdentifierCrypt() {
+        this.database = MongoConnection.getDatabase();
         this.collection = database.getCollection("ident");
     }
 
     public void saveIdent(UserIdentifier ident) {
-        Document userDoc = new Document("username", ident.getUser().getUsername());
-        userDoc.append("name", ident.getUser().getName());
-        userDoc.append("password", ident.getUser().getPassword());
-
-        Document identDoc = new Document("publicKey", ident.getKey());
-        identDoc.append("privateKey", ident.getSecretKey());
-        identDoc.append("user", userDoc);
+        
+        byte[] privateKey = ident.getSecretKey().getEncoded();
+        byte[] publicKey = ident.getKey().getEncoded();
+        
+        Document identDoc = new Document("user", ident.getUser());
+        identDoc.append("privateKey", privateKey);
+        identDoc.append("publicKey",  publicKey);
 
         collection.insertOne(identDoc);
     }

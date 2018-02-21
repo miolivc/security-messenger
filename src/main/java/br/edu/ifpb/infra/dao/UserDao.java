@@ -12,13 +12,16 @@ public class UserDao {
     
     @PersistenceContext
     private EntityManager manager;
+
+    public UserDao() {
+    }
     
     public void save(User user) {
         manager.persist(user);
     }
     
     public List<User> getAll() {
-        return manager.createQuery("FROM Account user", User.class)
+        return manager.createQuery("FROM User user", User.class)
                       .getResultList();
     }
     

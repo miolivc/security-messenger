@@ -13,6 +13,9 @@ public class UserIdentifierDao {
     
     @PersistenceContext
     private EntityManager manager;
+
+    public UserIdentifierDao() {
+    }
     
     public void save(UserIdentifier user) {
         manager.persist(user);

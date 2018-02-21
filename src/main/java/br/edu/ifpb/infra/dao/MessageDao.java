@@ -16,6 +16,9 @@ public class MessageDao {
     @PersistenceContext
     private EntityManager manager;
 
+    public MessageDao() {
+    }
+
     public void save(MessageDTO msg) {
         manager.persist(msg);
     }
