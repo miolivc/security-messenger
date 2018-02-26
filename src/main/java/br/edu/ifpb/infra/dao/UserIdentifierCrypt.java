@@ -23,13 +23,16 @@ public class UserIdentifierCrypt {
     }
 
     public void saveIdent(UserIdentifier ident) {
-        
-        byte[] privateKey = ident.getSecretKey().getEncoded();
-        byte[] publicKey = ident.getKey().getEncoded();
-        
-        Document identDoc = new Document("user", ident.getUser());
-        identDoc.append("privateKey", privateKey);
-        identDoc.append("publicKey",  publicKey);
+
+        User user = ident.getUser();
+
+        Document userDoc = new Document("username", user.getUsername());
+        userDoc.append("name", user.getName());
+        userDoc.append("password", user.getPassword());
+
+        Document identDoc = new Document("user", userDoc);
+        identDoc.append("privateKey", ident.getSecretKey().getEncoded());
+        identDoc.append("publicKey", ident.getKey().getEncoded());
 
         collection.insertOne(identDoc);
     }
@@ -45,6 +48,7 @@ public class UserIdentifierCrypt {
         UserIdentifier ident = new UserIdentifier();
 
         while (cursor.hasNext()) {
+            
             Document document = (Document) cursor.next();
             ident.setUser(user);
             ident.setKey((PublicKey) document.get("publicKey"));
