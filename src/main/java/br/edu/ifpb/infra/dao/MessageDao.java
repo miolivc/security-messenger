@@ -1,8 +1,6 @@
 package br.edu.ifpb.infra.dao;
 
 import br.edu.ifpb.domain.MessageDTO;
-import br.edu.ifpb.domain.TextMessage;
-import org.eclipse.persistence.internal.jpa.metamodel.EntityTypeImpl;
 
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;

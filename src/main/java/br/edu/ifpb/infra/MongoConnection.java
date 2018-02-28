@@ -7,7 +7,7 @@ import com.mongodb.client.MongoDatabase;
 public class MongoConnection {
     
     public static MongoDatabase getDatabase() {
-        return new MongoClient("172.17.0.3", 27017)
+        return new MongoClient("host-mongo", 27017)
                 .getDatabase("security-messenger");
     }
     
