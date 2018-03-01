@@ -1,10 +1,10 @@
-package br.ifpb.edu.service;
+package br.edu.ifpb.service;
 
 import br.edu.ifpb.domain.User;
 import br.edu.ifpb.domain.UserIdentifier;
 import br.edu.ifpb.infra.dao.UserDao;
-import br.ifpb.edu.exception.NotIdentifiedException;
-import br.ifpb.edu.exception.UserException;
+import br.edu.ifpb.exception.NotIdentifiedException;
+import br.edu.ifpb.exception.UserException;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 
@@ -19,8 +19,7 @@ public class LoginService {
     public LoginService() {
     }
 
-    public void signIn(String username, String password, String name)
-            throws UserException {
+    public void signIn(String username, String password, String name) throws UserException {
         
         User user = new User(username, name, password);
         
@@ -35,13 +34,10 @@ public class LoginService {
         credentialService.createCredential(user);
     }
 
-    public UserIdentifier login(String username, String password)
-            throws UserException {
-        
+    public UserIdentifier login(String username, String password) {
         User user = users.getOne(username);
         
-        if (user.getUsername().equals(username)
-                && user.getPassword().equals(password)) {
+        if (user.getUsername().equals(username) && user.getPassword().equals(password)) {
             try {
                 return credentialService.getPrivateCredential(user);
             } catch (NotIdentifiedException ex) {

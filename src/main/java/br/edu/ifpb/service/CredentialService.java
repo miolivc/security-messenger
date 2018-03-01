@@ -1,13 +1,14 @@
-package br.ifpb.edu.service;
+package br.edu.ifpb.service;
 
 import br.edu.ifpb.domain.User;
 import br.edu.ifpb.domain.UserIdentifier;
 import br.edu.ifpb.infra.dao.UserIdentifierCrypt;
 import br.edu.ifpb.infra.dao.UserIdentifierDao;
 import br.edu.ifpb.security.CredentialManager;
-import br.ifpb.edu.exception.NotIdentifiedException;
+import br.edu.ifpb.exception.NotIdentifiedException;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
+import java.util.List;
 
 @Stateless
 public class CredentialService {
@@ -31,6 +32,10 @@ public class CredentialService {
 
     public UserIdentifier getPublicCredential(String username) {
         return idents.getOne(username);
+    }
+
+    public List<UserIdentifier> getAllCredential() {
+        return idents.getAll();
     }
 
     public UserIdentifier getPrivateCredential(User user) 

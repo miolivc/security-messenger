@@ -1,14 +1,13 @@
 package br.edu.ifpb.resource;
 
 import br.edu.ifpb.domain.User;
-import br.ifpb.edu.exception.UserException;
-import br.ifpb.edu.service.LoginService;
+import br.edu.ifpb.exception.UserException;
+import br.edu.ifpb.service.LoginService;
 import java.net.URI;
 import javax.ejb.EJB;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
@@ -29,11 +28,11 @@ public class SignInResource {
             return Response.status(401).entity(ex).build();
         }
 
-        URI location = info.getAbsolutePathBuilder()
-                           .path(user.getUsername())
-                           .build();
+//        URI location = info.getAbsolutePathBuilder()
+//                           .path(user.getUsername())
+//                           .build();
 
-        return Response.created(location).build();
+        return Response.created(null).build();
     }
     
 }

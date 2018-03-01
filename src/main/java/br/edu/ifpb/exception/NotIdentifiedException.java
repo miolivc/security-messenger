@@ -1,5 +1,5 @@
 
-package br.ifpb.edu.exception;
+package br.edu.ifpb.exception;
 
 public class NotIdentifiedException extends Exception {
 
