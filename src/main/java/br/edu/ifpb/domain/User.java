@@ -2,16 +2,14 @@
 package br.edu.ifpb.domain;
 
 import java.io.Serializable;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Entity
 @Table(name = "account")
 public class User implements Serializable {
-    
+
     @Id
+    @Column(length = 16, unique = true, nullable = false)
     private String username;
     
     @Column(length = 30, nullable = false)

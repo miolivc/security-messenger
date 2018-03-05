@@ -1,6 +1,7 @@
 package br.edu.ifpb.resource;
 
 import br.edu.ifpb.domain.UserIdentifier;
+import br.edu.ifpb.infra.query.PublicUserIdentifier;
 import br.edu.ifpb.service.CredentialService;
 import br.edu.ifpb.service.LoginService;
 
@@ -22,15 +23,10 @@ public class UserResource {
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public Response getUserIdents() {
-
-        List<UserIdentifier> all = service.getAllCredential();
-
-        if (all == null) {
+        final List<PublicUserIdentifier> all = service.getAllCredential();
+        if (all == null || all.isEmpty())
             Response.status(Response.Status.NOT_FOUND).entity("{'msg':'not found'}").build();
-        }
-        GenericEntity<UserIdentifier> answer = new GenericEntity(all){};
-
-        return Response.ok().entity(answer).build();
+        return Response.ok(all).build();
     }
 
 }

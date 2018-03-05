@@ -4,6 +4,7 @@ import br.edu.ifpb.domain.User;
 import br.edu.ifpb.domain.UserIdentifier;
 import br.edu.ifpb.infra.dao.UserIdentifierCrypt;
 import br.edu.ifpb.infra.dao.UserIdentifierDao;
+import br.edu.ifpb.infra.query.PublicUserIdentifier;
 import br.edu.ifpb.security.CredentialManager;
 import br.edu.ifpb.exception.NotIdentifiedException;
 import javax.ejb.Stateless;
@@ -17,15 +18,19 @@ public class CredentialService {
     private UserIdentifierDao idents;
     @Inject
     private UserIdentifierCrypt cryptIdents;
-    @Inject
-    private CredentialManager cm;
+//    @Inject
+//    private CredentialManager cm;
 
     public CredentialService() {
+//        cm.prepare();
     }
 
     public void createCredential(User user) {
-        UserIdentifier ident = new UserIdentifier(user, cm.getPublicKey(),
-                cm.getPrivateKey());
+//        UserIdentifier ident = new UserIdentifier(user, cm.getPublicKey(),
+//                cm.getPrivateKey());
+        CredentialManager.prepare();
+        UserIdentifier ident = new UserIdentifier(user, CredentialManager.getPublicKey(),
+                CredentialManager.getPrivateKey());
         idents.save(ident);
         cryptIdents.saveIdent(ident);
     }
@@ -34,7 +39,7 @@ public class CredentialService {
         return idents.getOne(username);
     }
 
-    public List<UserIdentifier> getAllCredential() {
+    public List<PublicUserIdentifier> getAllCredential() {
         return idents.getAll();
     }
 

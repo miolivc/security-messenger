@@ -3,13 +3,13 @@ package br.edu.ifpb.infra.dao;
 import br.edu.ifpb.domain.User;
 import br.edu.ifpb.domain.UserIdentifier;
 import br.edu.ifpb.infra.MongoConnection;
+import br.edu.ifpb.infra.attrconverter.KeyConverter;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoCursor;
 import com.mongodb.client.MongoDatabase;
-import java.security.PrivateKey;
-import java.security.PublicKey;
 import javax.ejb.Stateless;
 import org.bson.Document;
+import org.bson.types.Binary;
 
 @Stateless
 public class UserIdentifierCrypt {
@@ -31,7 +31,7 @@ public class UserIdentifierCrypt {
         userDoc.append("password", user.getPassword());
 
         Document identDoc = new Document("user", userDoc);
-        identDoc.append("privateKey", ident.getSecretKey().getEncoded());
+        identDoc.append("privateKey", KeyConverter.convert(ident.getSecretKey()));
         identDoc.append("publicKey", ident.getKey().getEncoded());
 
         collection.insertOne(identDoc);
@@ -48,11 +48,10 @@ public class UserIdentifierCrypt {
         UserIdentifier ident = new UserIdentifier();
 
         while (cursor.hasNext()) {
-            
             Document document = (Document) cursor.next();
             ident.setUser(user);
-            ident.setKey((PublicKey) document.get("publicKey"));
-            ident.setSecretKey((PrivateKey) document.get("privateKey"));
+            ident.setKey(KeyConverter.convertPub((byte[]) document.get("publicKey", Binary.class).getData()));
+            ident.setSecretKey(KeyConverter.convert((byte[]) document.get("privateKey",Binary.class).getData()));
             break;
         }
         return ident;

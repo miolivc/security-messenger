@@ -1,35 +1,41 @@
 
 package br.edu.ifpb.security;
 
+import javax.ejb.Singleton;
+import javax.ejb.Stateful;
+import javax.ejb.Stateless;
+import javax.enterprise.context.ApplicationScoped;
+import javax.inject.Named;
 import java.security.KeyPair;
 import java.security.KeyPairGenerator;
 import java.security.NoSuchAlgorithmException;
 import java.security.PrivateKey;
 import java.security.PublicKey;
-import javax.ejb.Stateless;
 
-@Stateless
 public class CredentialManager {
     
-    private final int LENGHT_KEY = 2048;
-    private final KeyPair keyPair;
-    private KeyPairGenerator generator;
+    private static final int LENGHT_KEY = 2048;
+    private static KeyPair keyPair;
+    private static KeyPairGenerator generator;
     
     public CredentialManager() {
+    }
+
+    public static void prepare() {
         try {
-            this.generator = KeyPairGenerator.getInstance("RSA");
+            CredentialManager.generator = KeyPairGenerator.getInstance("RSA");
         } catch (NoSuchAlgorithmException ex) {
             System.err.println("CredentialManager" + ex.getMessage());
         }
         generator.initialize(LENGHT_KEY);
-        this.keyPair = generator.genKeyPair();
+        CredentialManager.keyPair = generator.genKeyPair();
     }
-    
-    public PublicKey getPublicKey() {
+
+    public static PublicKey getPublicKey() {
         return keyPair.getPublic();
     }
     
-    public PrivateKey getPrivateKey() {
+    public static PrivateKey getPrivateKey() {
         return keyPair.getPrivate();
     }
     

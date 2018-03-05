@@ -4,10 +4,7 @@ package br.edu.ifpb.resource;
 import br.edu.ifpb.domain.UserIdentifier;
 import br.edu.ifpb.service.LoginService;
 import javax.ejb.EJB;
-import javax.ws.rs.POST;
-import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
-import javax.ws.rs.Produces;
+import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
@@ -18,9 +15,10 @@ public class LoginResource {
     private LoginService service;
 
     @POST
-    @Produces(MediaType.TEXT_PLAIN)
-    public Response login(@PathParam("username") String username,
-            @PathParam("password") String password) {
+    @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response login(@FormParam("username") String username,
+            @FormParam("password") String password) {
 
         UserIdentifier ident = service.login(username, password);
 
@@ -30,7 +28,7 @@ public class LoginResource {
                     .build();
         }
 
-        return Response.ok().entity(ident.getSecretKey().getEncoded()).build();
+        return Response.ok().entity(ident.getSecretKey()).build();
     }
 
 }

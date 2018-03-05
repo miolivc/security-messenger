@@ -14,7 +14,7 @@ import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 
 @Path("signin")
-public class SignInResource {
+public class SigninResource {
 
     @EJB
     private LoginService service;
@@ -23,7 +23,8 @@ public class SignInResource {
     @Consumes(MediaType.APPLICATION_JSON)
     public Response create(@Context UriInfo info, User user) {
         try {
-            service.signIn(user.getUsername(), user.getPassword(), user.getName());
+            service.signin(user);
+//            service.signin(user.getUsername(), user.getPassword(), user.getName());
         } catch(UserException ex) {
             return Response.status(401).entity(ex).build();
         }

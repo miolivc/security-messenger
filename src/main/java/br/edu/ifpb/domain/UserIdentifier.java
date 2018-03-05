@@ -4,19 +4,20 @@ package br.edu.ifpb.domain;
 import java.io.Serializable;
 import java.security.PrivateKey;
 import java.security.PublicKey;
-import javax.persistence.CascadeType;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.OneToOne;
-import javax.persistence.Transient;
+import javax.persistence.*;
 
 @Entity
+@SequenceGenerator(name = "ident_seq", sequenceName = "ident_seq")
 public class UserIdentifier implements Serializable {
-    
-    @OneToOne(cascade = CascadeType.MERGE)
+
+    @Id
+    @GeneratedValue(generator = "ident_seq", strategy = GenerationType.SEQUENCE)
+    private int id;
+
+    @OneToOne(cascade = CascadeType.ALL)
     private User user;
     
-    @Id
+    @Column(unique = true)
     private PublicKey key;
     
     @Transient

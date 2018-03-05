@@ -23,7 +23,6 @@ public class MongoConnectionTest {
 
     @Test
     public void connect() {
-//        database.createCollection("test");
         Assert.assertNotNull(database.getCollection("test"));
     }
 
