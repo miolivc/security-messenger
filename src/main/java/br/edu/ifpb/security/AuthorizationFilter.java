@@ -33,6 +33,7 @@ public class AuthorizationFilter implements ContainerRequestFilter {
 
         if (authHeader == null || authHeader.isEmpty() || (! authHeader.contains("Basic ")) ) {
             requestContext.abortWith(Response.status(Status.UNAUTHORIZED).entity("{'msg':'unauthorized'}").build());
+            return;
         }
 
         String withoutBasic = authHeader.replaceAll("Basic ", "");

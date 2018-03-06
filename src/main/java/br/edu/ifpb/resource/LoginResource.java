@@ -20,6 +20,9 @@ public class LoginResource {
     public Response login(@FormParam("username") String username,
             @FormParam("password") String password) {
 
+        if (username == null || username.isEmpty() || password == null || password.isEmpty())
+            return Response.status(Response.Status.BAD_REQUEST).build();
+
         UserIdentifier ident = service.login(username, password);
 
         if (ident == null) {
