@@ -1,5 +1,5 @@
 # security-messenger:
-REST API para um messenger com criptogragia RSA nas mensagens
+REST API para um messenger com criptogragia RSA
 
 **1. Run:**  
 `sh run.sh`
